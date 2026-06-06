@@ -13,9 +13,12 @@ Starter repository for the Kaggle competition [Hull Tactical - Market Prediction
 ## What We Know So Far
 
 - Competition type: Featured Code Competition
-- Prompt: predict market returns / predictability under volatility constraints
+- Prompt: predict excess S&P 500 returns while respecting volatility constraints
+- Metric: a Sharpe-ratio variant with penalties for poor return and excessive volatility
+- Submission mode: official submissions must use the provided Kaggle evaluation API, not a normal CSV upload
+- Prediction target at submission time: daily allocation to the S&P 500 in the valid range `[0, 2]`
 - Time remaining at setup: 10 days
-- Kaggle currently shows an account gate: identity verification is required before submission
+- Current gate on the account shown in browser: identity verification is incomplete
 
 ## Current Objective
 
@@ -44,7 +47,16 @@ hull-tactical-market-prediction/
 - Time-aware regression baseline with `TimeSeriesSplit`
 - Mixed-type preprocessing for numeric and categorical features
 - Multi-model benchmark to pick a first strong baseline
-- Output artifacts for metrics and test predictions
+- Output artifacts for metrics and offline test predictions
+
+## Competition-Specific Constraint
+
+This competition is closer to a market-timing system than a plain regression leaderboard.
+
+- Offline research can use local train/test files and benchmark predictive models.
+- Official competition submission must be wrapped in the Kaggle evaluation API.
+- The final model must emit a position size or allocation, not just a raw return forecast.
+- Any serious attempt to win will need leak-free temporal validation that tracks the competition metric, not just RMSE.
 
 ## Quick Start
 
@@ -71,7 +83,7 @@ python pipeline.py train --data-dir data/raw --target-column target --time-colum
 1. Join the competition and complete Kaggle identity verification.
 2. Download the official data into `data/raw/`.
 3. Inspect schema, target definition, and any sample submission format.
-4. Replace the generic baseline with competition-specific objective engineering.
+4. Replace the generic baseline with competition-specific objective engineering and allocation logic.
 5. Add stronger models and feature generation aimed at leaderboard performance.
 
 ## Winning Direction
