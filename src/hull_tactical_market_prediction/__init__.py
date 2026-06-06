@@ -1,0 +1,1 @@
+"""Hull Tactical market prediction package."""
